@@ -56,19 +56,20 @@ This tool makes it easy to convert those links into the JSON format required by 
 Example / Пример:
 
 ```
-ss://Y2hhY2hhMjAtaWV0ZjpwYXNzd29yZEAxMjcuMC4wLjE6ODA=
+ss://YWVzLTI1Ni1nY206TXlTM2NyM3RQYXNzdzByZCE=@relay.examplevpn.com:443/?outline=1#Sample%20VPN%20for%20Android%20TV
+
 ```
 
 Output / Результат:
 
 ```json
 {
-  "server": "127.0.0.1",
-  "server_port": 80,
-  "local_port": 1080,
-  "password": "password",
-  "method": "chacha20-ietf",
-  "remarks": "Outline Server"
+    "server": "relay.examplevpn.com",
+    "server_port": 443,
+    "local_port": 1080,
+    "password": "MyS3cr3tPassw0rd!",
+    "method": "aes-256-gcm",
+    "remarks": "Outline Server"
 }
 ```
 
