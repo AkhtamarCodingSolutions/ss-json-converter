@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shadowsocks Link to JSON</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+    textarea, input { width: 100%; margin: 10px 0; padding: 10px; font-family: monospace; }
+    button { padding: 10px 20px; cursor: pointer; }
+    pre { background: #f0f0f0; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Convert Shadowsocks (ss://...) Link to JSON</h2>
+  <textarea id="input" rows="4" placeholder="Paste ss:// link here..."></textarea>
+  <button onclick="convert()">Convert</button>
+  <h3>Result:</h3>
+  <pre id="output">{}</pre>
+
+  <script>
+    function decodeBase64(str) {
+      // add padding
+      str = str.trim();
+      while (str.length % 4 !== 0) str += "=";
+      try {
+        return decodeURIComponent(escape(atob(str)));
+      } catch (e) {
+        return "Invalid base64";
+      }
+    }
+
+    function parseSSUrl(ssUrl) {
+      if (!ssUrl.startsWith("ss://")) throw new Error("Not a valid ss:// link");
+      let url = ssUrl.slice(5).split('#')[0].split('?')[0];
+
+      let method, password, host, port;
+
+      if (url.includes("@")) {
+        const [credsB64, server] = url.split("@");
+        const decodedCreds = decodeBase64(credsB64);
+        [method, password] = decodedCreds.split(":");
+        [host, port] = server.split(":");
+      } else {
+        const decoded = decodeBase64(url);
+        const [creds, server] = decoded.split("@");
+        [method, password] = creds.split(":");
+        [host, port] = server.split(":");
+      }
+
+      return {
+        server: host,
+        server_port: parseInt(port),
+        local_port: 1080,
+        password: password,
+        method: method,
+        remarks: "Outline Server"
+      };
+    }
+
+    function convert() {
+      const input = document.getElementById("input").value.trim();
+      const output = document.getElementById("output");
+
+      try {
+        const result = parseSSUrl(input);
+        output.textContent = JSON.stringify(result, null, 4);
+      } catch (e) {
+        output.textContent = "Error: " + e.message;
+      }
+    }
+  </script>
+</body>
+</html>
