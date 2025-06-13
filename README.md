@@ -75,23 +75,6 @@ Output / Результат:
 
 ---
 
-## 🛠 Local Development / Локальная разработка
-
-```bash
-git clone https://github.com/yourusername/ss-outline-converter.git
-cd ss-outline-converter
-open index.html  # or use any static server / или используйте статический сервер
-```
-
-To deploy to GitHub Pages / Для публикации через GitHub Pages:
-
-```bash
-# Push to main branch / Запушьте в ветку main
-# Go to Repo → Settings → Pages → Enable Pages from main / Настройте GitHub Pages через настройки репозитория
-```
-
----
-
 ## 🤔 FAQ / Частые вопросы
 
 **Q: Is this safe? / Это безопасно?**  
